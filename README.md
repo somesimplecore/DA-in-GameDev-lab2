@@ -100,7 +100,12 @@ public class EnemyDragon : MonoBehaviour
 
 ![](/Pics/z1_2.jpg)
 
-Пересечение объектов:
+- Создание визуальных эффектов
+
+Скприт:
+
+
+
 
 ![](/Pics/Сцена2.jpg)
 
