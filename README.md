@@ -45,7 +45,7 @@
 
 ![](/Pics/z1_1.jpg)
 
-- Реализация передвижения дракона
+- Реализация передвижения дракона и сбрасывания яиц
 
 ```C#
 using UnityEngine;
@@ -59,7 +59,15 @@ public class EnemyDragon : MonoBehaviour
     public float chanceDirection = 0.1f;
     void Start()
     {
-        
+        Invoke("DropEgg", 2f);
+    }
+    
+    void DropEgg()
+    {
+        Vector3 MyVector = new Vector3(0.0f, 5.0f, 0.0f);
+        GameObject egg = Instantiate<GameObject>(dragonEggPrefab);
+        egg.transform.position = transform.position + MyVector;
+        Invoke("DropEgg", timeBetweenEggDrop);
     }
 
     void Update()
