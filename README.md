@@ -157,11 +157,6 @@ public class DragonPicker : MonoBehaviour
 
 ```
 
-Куб лежит на плоскости и при этом не проваливается:
-
-![](/Pics/Сцена3.jpg)
-
-
 ## Задание 2
 ### В проект, выполненный в предыдущем задании, добавить систему проверки того, что SDK подключен (доступен в режиме онлайн и отвечает на запросы)
 ### Ход Работы:
@@ -170,6 +165,17 @@ public class DragonPicker : MonoBehaviour
 ```javascript
 <!-- Yandex Games SDK -->
 <script src="https://yandex.ru/games/sdk/v2"></script>
+```
+
+Далее требуется инициализировать SDK, используя метод init объекта YaGames:
+
+```C#
+YaGames
+    .init()
+    .then(ysdk => {
+        console.log('Yandex SDK initialized');
+        window.ysdk = ysdk;
+    });
 ```
 
 Создадим у объекта Sphere дочерний объект Cylinder:
