@@ -102,12 +102,60 @@ public class EnemyDragon : MonoBehaviour
 
 - Создание визуальных эффектов
 
-Скприт:
+![](/Pics/z1_3.jpg)
 
+Скрипт поведения яйца:
+```C#
+using UnityEngine;
 
+public class DragonEgg : MonoBehaviour
+{
+    public static float bottomY = -30f;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        ParticleSystem ps = GetComponent<ParticleSystem>();
+        var em = ps.emission;
+        em.enabled = true;
 
-![](/Pics/Сцена2.jpg)
+        Renderer rend;
+        rend = GetComponent<Renderer>();
+        rend.enabled = false;
+    }
+
+    void Update()
+    {
+        if(transform.position.y < bottomY)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+}
+```
+
+Скрипт DragonPicker для генерации щитов:
+
+```C#
+using UnityEngine;
+
+public class DragonPicker : MonoBehaviour
+{
+    public GameObject energyShieldPrefab;
+    public int numEnergyShield = 3;
+    public float energyShieldBottomY = -6f;
+    public float energyShieldRadius = 1.5f;
+    void Start()
+    {
+        for(int i = 1; i <= numEnergyShield; i++)
+        {
+            GameObject tShieldGo = Instantiate<GameObject>(energyShieldPrefab);
+            tShieldGo.transform.position = new Vector3(0, energyShieldBottomY, 0);
+            tShieldGo.transform.localScale = new Vector3(1 * i, 1 * i, 1 * i);
+        }
+    }
+}
+
+```
 
 Куб лежит на плоскости и при этом не проваливается:
 
