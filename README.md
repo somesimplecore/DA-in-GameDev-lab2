@@ -1,5 +1,5 @@
-# Основы работы в среде разработки игр и интерактивных приложений. Основы работы c Unity.
-Отчет по лабораторной работе #1 выполнил(а):
+# Интеграция сервиса для получения данных профиля пользователя.
+Отчет по лабораторной работе #2 выполнил(а):
 - Паханов Александр Александрович
 - РИ-300018
 
@@ -36,63 +36,61 @@
 - ✨Magic ✨
 
 ## Цель работы
-Ознакомиться с основными функциями Unity и взаимодействием с объектами внутри редактора.
+Создание интерактивного приложения и изучение принципов интеграции в него игровых сервисов.
 
 ## Задание 1
-### В разделе «ход работы» пошагово выполнить каждый пункт с описанием и примера реализации задач по теме видео «Практическая работа 1-4».
+### По теме видео практических работ 1-5 повторить реализацию игры на Unity.
 ### Ход работы:
-- Создать новый проект из шаблона 3D – Core;
-- Проверить, что настроена интеграция редактора Unity и Visual Studio Code (пункты 8-10 введения);
-- Создать объект Plane;
-- Создать объект Cube;
-- Создать объект Sphere;
-- Установить компонент Sphere Collider для объекта Sphere;
-- Настроить Sphere Collider в роли триггера;
-- Объект куб перекрасить в красный цвет;
-- Добавить кубу симуляцию физики, при это куб не должен проваливаться под Plane;
-- Написать скрипт, который будет выводить в консоль сообщение о том, что объект Sphere столкнулся с объектом Cube;
-- При столкновении Cube должен менять свой цвет на зелёный, а при завершении столкновения обратно на красный.
+- Создание основных игровых объектов
 
-Созданные объекты:
+![](/Pics/z1_1.jpg)
 
-![](/Pics/Объекты.jpg)
+- Реализация передвижения дракона
 
-Компоненты объекта Plane:
-
-![](/Pics/Plane.jpg)
-
-Компоненты объекта Cube:
-
-![](/Pics/Cube.jpg)
-
-Компоненты объекта Sphere:
-
-![](/Pics/Sphere.jpg)
-
-Скрипт для объекта Sphere:
 ```C#
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class IintersectionDetector : MonoBehaviour
+public class EnemyDragon : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public GameObject dragonEggPrefab;
+    public float speed = 1;
+    public float timeBetweenEggDrop = 1f;
+    public float leftRightDistance = 10f;
+    public float chanceDirection = 0.1f;
+    void Start()
     {
-        Debug.Log("Sphere столкнулся с объектом " + other.gameObject.name);
-        other.gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+        
     }
 
-    private void OnTriggerExit(Collider other)
+    void Update()
     {
-        other.gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+        Vector3 pos = transform.position;
+        pos.x += speed * Time.deltaTime;
+        transform.position = pos;
+
+        if(pos.x < -leftRightDistance)
+        {
+            speed = Mathf.Abs(speed);
+        }
+        else if (pos.x > leftRightDistance)
+        {
+            speed = -Mathf.Abs(speed);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(Random.value < chanceDirection)
+        {
+            speed *= -1;
+        }
     }
 }
 ```
-Для проверки физики и срипта расположим куб над сферой и плоскостью:
 
-![](/Pics/Сцена1.jpg)
+- Добавление платформы и новых материалов
+
+![](/Pics/z1_2.jpg)
 
 Пересечение объектов:
 
